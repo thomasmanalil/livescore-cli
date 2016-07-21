@@ -8,6 +8,7 @@ def extractTag(tree, tag, cssClass):
     return [t.extract() for t in tree.findAll(tag, class_=cssClass)]
 
 
+# Parses the soup to return list of lists
 def parseTree(subtree):
     subtree = [t for t in subtree if t != ' ']
     i = 0
@@ -50,11 +51,17 @@ def is_connected(REMOTE_SERVER):
         return False
 
 
-def get_content_ts(url):
+# Get parsed HTML from the url
+def get_soup(url):
     # Request html from the site using http get
     response = requests.get(url)
     # Parse the response text using html parser and BeautifulSoup library
     soup = BeautifulSoup(response.text, 'html.parser')
+    return soup
+
+
+def get_content_ts(url):
+    soup = get_soup(url)
     # Select only the require content subtree from the website
     [content] = soup.select('body > div.wrapper > div.content')
     return content
@@ -85,6 +92,16 @@ def get_table(url):
 
     table = parseTree(table)
     return table
+
+
+# Get match facts
+def get_match_facts(url):
+    soup = get_soup(url)
+    details = soup.findAll('div', {'data-id': 'details'})  # Match Details
+    lineup = soup.findAll('div', {'data-id': 'substitutions'})  # Lineups, Formations and substitutions
+    statistics = soup.findAll('div', {'data-id': 'stats'})  # Statistics
+    [details, lineup, statistics] = map(parseTree, [details, lineup, statistics])
+    return details, lineup, statistics
 
 
 # main webscrapping code which take the url to scrap and returns the rows of data
