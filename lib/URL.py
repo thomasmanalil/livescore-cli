@@ -21,17 +21,12 @@ URL = {
 
        'portugal': ["Portugese Primera Liga",
            'http://www.livescore.com/soccer/portugal/liga-sagres/',
-           'http://www.bbc.com/sport/football/portuguese-primeira-liga/top-scorers']
+           'http://www.bbc.com/sport/football/portuguese-primeira-liga/top-scorers'],
+
+       'cl' : ['Champions leauge',
+           'http://www.livescore.com/soccer/champions-league/',
+           '']
        }
 
 soccerTN = 'http://www.soccernews.com/category/transfer-news/feed/'
 goalUS = 'http://www.goal.com/en-us/feeds/news?fmt=smj'
-
-'''
-Champions League
-Champions League qualification
-Europa League
-Europa League qualification
-Relegation Playoffs
-Relegation
-'''
