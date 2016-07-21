@@ -10,17 +10,20 @@ def extractTag(tree, tag, cssClass):
 
 def parseTree(subtree):
     subtree = [t for t in subtree if t != ' ']
-    for i in range(len(subtree)):
+    i = 0
+    while i < len(subtree):
         name = getattr(subtree[i], "name", None)
         if name is not None:
+            if name == 'a':
+                subtree[i].append(subtree[i]['href'])
             subtree[i] = parseTree(subtree[i])
+        i += 1
     subtree = [t
                for t in subtree
                if t != ' ' and t != '' and t is not None and t != []]
     if len(subtree) == 1:
         subtree = subtree[0]
     return subtree
-
 
 def create_directory(path):
     try:
@@ -84,11 +87,9 @@ def get_table(url):
     return table
 
 
-
-
-#main webscrapping code which take the url to scrap and returns the rows of data
-def get_livescore(url,scrapping_class):                                                                                                                             
+# main webscrapping code which take the url to scrap and returns the rows of data
+def get_livescore(url, scrapping_class):
     r = requests.get(url)
-    soup = BeautifulSoup(r.text,'html.parser')
+    soup = BeautifulSoup(r.text, 'html.parser')
     _rows = soup.findAll(class_=scrapping_class)
     return _rows
