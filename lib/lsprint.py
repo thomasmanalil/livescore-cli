@@ -1,62 +1,75 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 '''
-    modules containg all the layout configuration of printable data 
+    modules containg all the layout configuration of printable data
     scores : function containing layout info of scores
-    table : function containing layout info of table 
+    table : function containing layout info of table
 '''
 
 import lscolors as c
 import subprocess
 import sys, os
 import tt, URL, lsprocess
+import lsweb
 
 
 def sendAlert(message,title=''):
     #path to icon png file
-    icon_path = '/usr/share/icons/livescore.png'            
-    #bash command to send notification 
+    icon_path = '/usr/share/icons/livescore.png'
+    #bash command to send notification
     bash_command = 'notify-send -i '+icon_path+' "'+title+'" "'+message+'"'
     os.system(bash_command)
     return
+
+
+facts_route = {}
 
 #global variable to temporarily store the score of home and away team to compare for notification
 score_h = [0]*50
 score_a = [0]*50
 
 def scores(scores,key):
-    global score_h, score_a
+    global score_h, score_a, facts_route
     lmax = lsprocess.get_longest_list(scores)
-    total_width = sum(lmax)+8; test = 3
+    total_width = sum(lmax)+11; test = 3
+    index_no = 0    #temporary value to count match with link
 
     print_pattern('-',total_width,c.BLUE)
-    print(c.TITLE+'\t\t '+URL.URL[key][0]+' SCORES '+c.END)
+    print(c.TITLE+'\t\t\t '+URL.URL[key][0]+' SCORES \t\t\t'+c.END)
     print_pattern('-',total_width,c.BLUE)
-    
+
     for position,each_row in enumerate(scores):
         if isinstance(each_row,list) == False:
             #extract date if 1D array
-            date = each_row.strip()                 
+            date = each_row.strip()
             date_color = c.dateArray[test%3]; test+=1
         else:
             #time conversion to local time
-            time = tt._convert(each_row[0].strip()) 
-            
+            time = tt._convert(each_row[0].strip())
+
             home_team = each_row[1].strip()
             home_team_color = c.GREEN
             away_team = each_row[3].strip()
             away_team_color = c.GREEN
-            
-             
+
             try:
-                
-                _temp = each_row[2].strip().split() 
-                home_team_score = int(_temp[0])
-                away_team_score = int(_temp[2])
-                
+                if isinstance(each_row[2],list) == False:
+
+                    _temp = each_row[2].strip().split()
+                    home_team_score = int(_temp[0])
+                    away_team_score = int(_temp[2])
+                    temp_index = '  '
+
+                else:
+                    _temp = each_row[2][0].strip().split()
+                    home_team_score = int(_temp[0])
+                    away_team_score = int(_temp[2])
+                    index_no = index_no + 1
+                    temp_index = str(index_no)
+                    facts_route[index_no] = [(each_row[2][1].strip()), home_team, away_team]
 
                 middle_live = str(home_team_score) + ' - ' + str(away_team_score)
-                
+
                 if home_team_score > away_team_score:
                     away_team_color = c.RED
                     home_team_color = c.ORANGE
@@ -67,23 +80,65 @@ def scores(scores,key):
                     away_team_color = c.CYAN
                     home_team_color = c.CYAN
 
-                #if previous score is not equal to present score send notification to user 
+                #if previous score is not equal to present score send notification to user
                 if home_team_score != score_h[position] or away_team_score != score_a[position]:
-                    sendAlert(time+'   ' + home_team + '  ' + middle_live + '  ' + away_team,key)
+                    #sendAlert(time+'   ' + home_team + '  ' + middle_live + '  ' + away_team,key)
                     score_h[position] = home_team_score
                     score_a[position] = away_team_score
-            
-            except:
-                middle_live = each_row[2].strip()
 
-            
-            print(' '+date_color+''.join(date.ljust(lmax[0])) + ''.join(time.ljust(lmax[1]+2))  \
+            except:
+                if isinstance(each_row[2],list) == False:
+                    middle_live = each_row[2].strip()
+                    temp_index = '  '
+
+                else:
+                    middle_live = each_row[2][0].strip()
+                    index_no = index_no + 1
+                    temp_index = str(index_no)
+                    facts_route[index_no] = (each_row[2][1].strip(), home_team, away_team)
+
+
+            print(' '+date_color+''.join((temp_index).ljust(2))+' '+''.join(date.ljust(lmax[0])) + ''.join(time.ljust(lmax[1]+2))  \
                     + c.END +home_team_color+''.join(home_team.ljust(lmax[2]+2))+c.END      	\
                     + ''.join(middle_live.ljust(lmax[3]+2)) + away_team_color               	\
                     + ''.join(away_team.ljust(lmax[4])) + c.END)
-            
+
     print_pattern('-',total_width,c.BLUE)
+
+    print('Ctrl+C & ENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n \
+            i.e. '+c.CYAN+'2 lineup \t'+c.END+'for viewing lineups if exists\n \
+            or   '+c.CYAN+'2 details \t'+c.END+'for match details if exists\n \
+            or  '+c.CYAN+' 2 statistics \t'+c.END+'for match statistics if exists')
+
     print_pattern('-',total_width,c.BLUE)
+    return facts_route
+
+
+def match_facts(url, flag):
+
+    details, lineup, statistics = lsweb.get_match_facts(url)
+
+    if flag.strip() == 'details':
+        print(details)
+
+    elif flag.strip() == 'lineup':
+        print(lineup)
+
+    elif flag.strip() == 'statistics':
+        if len(statistics) == 0:
+            print('No Statistics Found')
+
+        else:
+            print(Statistics)
+
+    else:
+        print('Only details, lineup & statistics are valid ... ')
+
+
+
+
+
+
 
 
 
@@ -92,7 +147,7 @@ def table(tables,key):
     league_position = 0
     _temp = lsprocess.get_longest_list([row[1] for row in tables])
     longest_length = int(_temp[0])
-    ucl = 'Champions League';   ucl_color = c.ORANGE 
+    ucl = 'Champions League';   ucl_color = c.ORANGE
     ucl_qual = 'Champions League qualification';    ucq_color = c.BLUE
     europa = 'Europa League';   eup_color = c.PURPLE
     europa_qual = 'Europa League qualification';    euq_color = c.CYAN
@@ -107,7 +162,7 @@ def table(tables,key):
             +'\t'+'GD'+'\t'+'Pts')
 
     print_pattern('-',75+longest_length,c.BLUE)
-    
+
     for first_row in tables[1::]:
         league_position += 1
         team_name = first_row[1]
@@ -119,7 +174,7 @@ def table(tables,key):
         goals_against = first_row[7]
         goal_difference = first_row[8]
         total_points = first_row[9]
-        
+
         row_color = c.GREEN
         if isinstance(first_row[0],list) == True:
             if first_row[0][1] == ucl:
@@ -132,7 +187,7 @@ def table(tables,key):
                 row_color = euq_color
             elif first_row[0][1] == rel:
                 row_color = rel_color
-        
+
         else:
             pass
 
@@ -143,10 +198,15 @@ def table(tables,key):
                 +goal_difference+'\t'+total_points+c.END)
 
     print_pattern('+',75+longest_length,c.BLUE)
-    print(c.GRAY+' LP = League Position \tGP = Games Played\tW = Wins \tD = Draws \tL = Lose \n GF = Goals For\t\tGA = Goal Against \tGD = Goal Differences')     
+    print(c.GRAY+' LP = League Position \tGP = Games Played\tW = Wins \tD = Draws \tL = Lose \n GF = Goals For\t\tGA = Goal Against \tGD = Goal Differences')
     print_pattern('-',75+longest_length,c.GREEN)
     print(' '+ucl_color+ucl+'\t'+ucq_color+ucl_qual+'\t'+eup_color+europa+'\n '+euq_color+europa_qual+'\t'+rel_color+rel)
     print_pattern('+',75+longest_length,c.BLUE)
+
+
+
+
+
 
 
 

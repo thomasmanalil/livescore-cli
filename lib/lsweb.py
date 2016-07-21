@@ -3,7 +3,6 @@ import requests
 import os
 import socket
 
-
 def extractTag(tree, tag, cssClass):
     return [t.extract() for t in tree.findAll(tag, class_=cssClass)]
 
@@ -101,6 +100,7 @@ def get_match_facts(url):
     lineup = soup.findAll('div', {'data-id': 'substitutions'})  # Lineups, Formations and substitutions
     statistics = soup.findAll('div', {'data-id': 'stats'})  # Statistics
     [details, lineup, statistics] = map(parseTree, [details, lineup, statistics])
+
     return details, lineup, statistics
 
 

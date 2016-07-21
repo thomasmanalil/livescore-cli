@@ -80,3 +80,4 @@ def isgreat(time1, time2):
 
 def datetime_now():
     return time.strftime("%c")
+
