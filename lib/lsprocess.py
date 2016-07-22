@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-    module: containing all the backend processes 
+    module: containing all the backend processes
 '''
 
 def find_longest_no(array):
@@ -23,8 +23,13 @@ def get_longest_list(array):
                 list2return[0] = row_length
         else:
             for i in range(row_length):
-                row_row_length = len(row[i].strip())
-                if row_row_length > list2return[i+1]:
-                    list2return[i+1] = row_row_length
+                if isinstance(row[i],list) == False:
+                    row_row_length = len(row[i].strip())
+                    if row_row_length > list2return[i+1]:
+                        list2return[i+1] = row_row_length
+                else:
+                    row_row_length = len(row[i][0].strip())
+                    if row_row_length > list2return[i+1]:
+                        list2return[i+1] = row_row_length
 
     return list2return
