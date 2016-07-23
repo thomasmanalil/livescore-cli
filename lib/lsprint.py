@@ -104,11 +104,11 @@ def scores(scores,key):
                     + ''.join(away_team.ljust(lmax[4])) + c.END)
 
     print_pattern('-',total_width,c.BLUE)
-
-    print('Ctrl+C & ENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n \
-            i.e. '+c.CYAN+'2 lineup \t'+c.END+'for viewing lineups if exists\n \
-            or   '+c.CYAN+'2 details \t'+c.END+'for match details if exists\n \
-            or  '+c.CYAN+' 2 statistics \t'+c.END+'for match statistics if exists')
+    if temp_index != '  ':
+        print('Ctrl+C & ENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n \
+                i.e. '+c.CYAN+'2 lineup \t'+c.END+'for viewing lineups if exists\n \
+                or   '+c.CYAN+'2 details \t'+c.END+'for match details if exists\n \
+                or  '+c.CYAN+' 2 statistics \t'+c.END+'for match statistics if exists')
 
     print_pattern('-',total_width,c.BLUE)
     return facts_route

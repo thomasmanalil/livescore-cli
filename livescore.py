@@ -13,12 +13,13 @@ from lib import lsnews
 def main():
     pingTest = 'www.google.com'
     index_no = 0
-    flag = True
+    flag = 0
     bTable = bool(cli.args.table)
     bScore = bool(cli.args.score)
     bScorers = bool(cli.args.scorers)
     url_dict = {}
     facts_tail = []
+    bye_message = '\n\nBye, Keep Loving Football and livescore-cli :)\n'
 
     if not bTable and not bScore and not bScorers and not bNews:
         bScore = True
@@ -41,17 +42,17 @@ def main():
                         if index_no == 0:
                             print("Displaying Scores for {}".format(URL.URL[k][0]))
                             url_dict = lsprint.scores(lsweb.get_score(content), k)
-                            flag = True
+                            flag = 0
 
                         elif index_no in url_dict.iterkeys():
                             print("Displaying Match Details for {} vs {}".format(url_dict[index_no][1],url_dict[index_no][2]))
                             lsprint.match_facts('http://livescore.com'+url_dict[index_no][0], facts_tail)
-                            flag = False
+                            flag = 1
 
                         else:
                             print(c.RED+'Index number not in range')
                             url_dict = lsprint.scores(lsweb.get_score(content), k)
-                            flag = True
+                            flag = 0
 
                     if bScorers:
                         print("Displaying Top Scorers for"
@@ -73,27 +74,24 @@ def main():
         except KeyboardInterrupt:
 
             try:
-                if url_dict and flag == True:
+                if url_dict and flag == 0:
 
                     facts_input = raw_input(c.CYAN+" Enter index number of the match: "+c.END)
                     _temp = facts_input.split(' ')
                     index_no = int(_temp[0])
                     facts_tail = _temp[1]
 
-                elif url_dict and flag == False:
-                    main()
-
+                elif url_dict and flag == 1:
+                    index_no = 0
 
                 else:
-                    if not url_dict:
-                        print(c.RED+'No Match Details Available')
-                    print(c.RED+'\n\nBye, Keep Loving Football and livescore-cli :)\n')
+                    print(c.GREEN+bye_message+c.END)
+                    flag = 0
                     break
 
 
-
             except KeyboardInterrupt:
-                print(c.RED+'\n\nBye, Keep Loving Football and livescore-cli :)\n')
+                print(c.GREEN+bye_message+c.END)
                 break
 
 if __name__ == '__main__':
