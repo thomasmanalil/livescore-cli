@@ -59,15 +59,13 @@ def get_soup(url):
     return soup
 
 
-def get_content_ts(url):
-    soup = get_soup(url)
+def get_content_ts(soup):
     # Select only the require content subtree from the website
     [content] = soup.select('body > div.wrapper > div.content')
     return content
 
 
-def get_score(url):
-    content = get_content_ts(url)
+def get_score(content):
 
     # some not required tags
     extractTag(content, 'div', 'cal-wrap')
@@ -82,8 +80,7 @@ def get_score(url):
     return score
 
 
-def get_table(url):
-    content = get_content_ts(url)
+def get_table(content):
 
     # The extracted table is removed from the original content.
     # So the content now only contains the score

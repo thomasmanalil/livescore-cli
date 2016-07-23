@@ -31,15 +31,16 @@ def main():
 
                 print(' ... Fetching information from www.livescore.com ... ')
                 if lsweb.is_connected(pingTest) is True:
+                    content = lsweb.get_content_ts(lsweb.get_soup(URL.URL[k][1]))
 
                     if bTable:
                         print("Displaying Table for {}".format(URL.URL[k][0]))
-                        lsprint.table(lsweb.get_table(URL.URL[k][1]), k)
+                        lsprint.table(lsweb.get_table(content), k)
 
                     if bScore:
                         if index_no == 0:
                             print("Displaying Scores for {}".format(URL.URL[k][0]))
-                            url_dict = lsprint.scores(lsweb.get_score(URL.URL[k][1]), k)
+                            url_dict = lsprint.scores(lsweb.get_score(content), k)
                             flag = True
 
                         elif index_no in url_dict.iterkeys():
@@ -49,7 +50,7 @@ def main():
 
                         else:
                             print(c.RED+'Index number not in range')
-                            url_dict = lsprint.scores(lsweb.get_score(URL.URL[k][1]), k)
+                            url_dict = lsprint.scores(lsweb.get_score(content), k)
                             flag = True
 
                     if bScorers:
@@ -72,25 +73,26 @@ def main():
         except KeyboardInterrupt:
 
             try:
-                if len(url_dict) > 0 and flag == True:
+                if url_dict and flag == True:
 
                     facts_input = raw_input(c.CYAN+" Enter index number of the match: "+c.END)
                     _temp = facts_input.split(' ')
                     index_no = int(_temp[0])
                     facts_tail = _temp[1]
 
-                elif len(url_dict) > 0 and flag == False:
+                elif url_dict and flag == False:
                     main()
 
 
                 else:
+                    if not url_dict:
+                        print(c.RED+'No Match Details Available')
                     print(c.RED+'\n\nBye, Keep Loving Football and livescore-cli :)\n')
                     break
 
 
 
             except KeyboardInterrupt:
-
                 print(c.RED+'\n\nBye, Keep Loving Football and livescore-cli :)\n')
                 break
 
