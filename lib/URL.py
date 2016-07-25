@@ -26,6 +26,9 @@ URL = {
        'cl' : ['Champions leauge',
            'http://www.livescore.com/soccer/champions-league/',
            '']
+
+
+
        }
 
 soccerTN = 'http://www.soccernews.com/category/transfer-news/feed/'

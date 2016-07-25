@@ -122,7 +122,7 @@ def match_facts(url, flag):
         print(details)
 
     elif flag.strip() == 'lineup':
-        print(lineup)
+        _lineup(lineup)
 
     elif flag.strip() == 'statistics':
         if len(statistics) == 0:
@@ -136,7 +136,37 @@ def match_facts(url, flag):
 
 
 
+def _lineup(lineups):
+    print_pattern('+',60,c.BLUE)
+    print(c.TITLE+'\t\t\t '+' LINEUPS \t\t\t'+c.END)
+    print_pattern('+',60,c.BLUE)
+    print(lineups)
+    flag = 0 #flag for details like lineup, substitution etc
 
+    for each_row in lineups:
+        if isinstance(each_row, list) == False:
+            if each_row == 'line-ups :':
+                flag = 1
+
+            elif each_row == 'substitutions :':
+                flag = 2
+
+            elif each_row == 'substitute players :':
+                flag = 3
+
+            elif each_row == 'coach :':
+                flag = 4
+
+        else:
+            if flag == 1:
+                if len(each_row) == 2:
+                    print(each_row[0]+each_row[1])
+
+                elif len(each_row) == 3:
+                    if isinstance(each_row[0],int) == False:
+                        print(str(each_row[0])+each_row[1]+each_row[2])
+                    else:
+                        print(each_row[0]+each_row[1]+each_row[2])
 
 
 

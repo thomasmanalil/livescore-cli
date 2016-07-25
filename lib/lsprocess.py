@@ -4,6 +4,9 @@
     module: containing all the backend processes
 '''
 
+
+#returns length of longest string in an array
+
 def find_longest_no(array):
     longest_length = 5
     for data in array:
@@ -13,6 +16,9 @@ def find_longest_no(array):
     return longest_length
 
 
+
+#for score print
+#returns array of longest string in multi dimentional array
 
 def get_longest_list(array):
     list2return = [0]*len(array[0])
@@ -33,3 +39,11 @@ def get_longest_list(array):
                         list2return[i+1] = row_row_length
 
     return list2return
+
+
+
+#for match facts
+
+def get_longest_no_list(array):
+    print(0)
+
