@@ -60,8 +60,8 @@ def main():
                         print('Working on it')
 
                 else:
-                    print(c.fill[3]+"Check Your Internet Connection ,"
-                          " It looks like you're out of internet."+c.END)
+                    print(c.TITLE+"Check Your Internet Connection ,"
+                          "It looks like you're out of internet."+c.END)
 
                 time.sleep(3)
 
