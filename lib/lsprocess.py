@@ -39,11 +39,3 @@ def get_longest_list(array):
                         list2return[i+1] = row_row_length
 
     return list2return
-
-
-
-#for match facts
-
-def get_longest_no_list(array):
-    print(0)
-

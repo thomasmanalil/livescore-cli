@@ -29,7 +29,6 @@ def main():
             os.system('clear')
             for k in cli.args.League:
                 # Code to fetch data from URL[k]
-
                 print(' ... Fetching information from www.livescore.com ... ')
                 if lsweb.is_connected(pingTest) is True:
                     content = lsweb.get_content_ts(lsweb.get_soup(URL.URL[k][1]))
@@ -60,8 +59,9 @@ def main():
                         print('Working on it')
 
                 else:
-                    print(c.TITLE+"Check Your Internet Connection ,"
-                          "It looks like you're out of internet."+c.END)
+                    flag = 1
+                    print(c.TITLE+"Check Your Internet Connection,"
+                          " It looks like you're out of internet."+c.END)
 
                 time.sleep(3)
 

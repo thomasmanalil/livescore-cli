@@ -98,9 +98,10 @@ def scores(scores,key):
                     facts_route[index_no] = (each_row[2][1].strip(), home_team, away_team)
 
 
-            print(' '+date_color+''.join((temp_index).ljust(2))+' '+''.join(date.ljust(lmax[0])) + ''.join(time.ljust(lmax[1]+2))  \
-                    + c.END +home_team_color+''.join(home_team.ljust(lmax[2]+2))+c.END      	\
-                    + ''.join(middle_live.ljust(lmax[3]+2)) + away_team_color               	\
+            print(' '+date_color+''.join((temp_index).ljust(2))+' '
+                    +''.join(date.ljust(lmax[0])) + ''.join(time.ljust(lmax[1]+2))      \
+                    + c.END +home_team_color+''.join(home_team.ljust(lmax[2]+2))+c.END  \
+                    + ''.join(middle_live.ljust(lmax[3]+2)) + away_team_color           \
                     + ''.join(away_team.ljust(lmax[4])) + c.END)
 
     print_pattern('-',total_width,c.BLUE)
@@ -137,11 +138,19 @@ def match_facts(url, flag):
 
 
 def _lineup(lineups):
+
+    lengthlist = lsprocess.get_longest_list(lineups)
+    length = max(lengthlist)+2
+
     print_pattern('+',60,c.BLUE)
-    print(c.TITLE+'\t\t\t '+' LINEUPS \t\t\t'+c.END)
+    print(c.TITLE+'\t\t\t'+' LINEUPS '+c.END)
     print_pattern('+',60,c.BLUE)
-    print(lineups)
+
     flag = 0 #flag for details like lineup, substitution etc
+    print(c.fill[2]+'       '+''.join(('HOME TEAM').ljust(length)) \
+        +c.END+'      '+''.join(('AWAY TEAM').ljust(length))+c.END)
+
+    print_pattern('-',60,c.BLUE)
 
     for each_row in lineups:
         if isinstance(each_row, list) == False:
@@ -157,18 +166,36 @@ def _lineup(lineups):
             elif each_row == 'coach :':
                 flag = 4
 
+            elif each_row == 'formations :':
+                flag = 5
+
+
         else:
+
+            if flag == 5:
+                print('      '+''.join(str(each_row[0]).ljust(length)) \
+                    +'      '+''.join(str(each_row[1]).ljust(length)))
+                print_pattern('-',60,c.BLUE)
+
+
             if flag == 1:
                 if len(each_row) == 2:
-                    print(each_row[0]+each_row[1])
+                    print(c.CYAN+'      '+''.join(each_row[0].ljust(length)) \
+                            +'      '+''.join(each_row[1].ljust(length))+c.END)
 
                 elif len(each_row) == 3:
-                    if isinstance(each_row[0],int) == False:
-                        print(str(each_row[0])+each_row[1]+each_row[2])
-                    else:
-                        print(each_row[0]+each_row[1]+each_row[2])
+                    try:
+                        int((each_row[0].split("'"))[0])
+                        print(' '+c.END+''.join(each_row[0].ljust(5)) \
+                                +''.join(each_row[1].ljust(length)) \
+                                +'      '+c.CYAN+''.join(each_row[2].ljust(length))+c.END)
+                    except:
+                        print('      '+c.CYAN+''.join(each_row[0].ljust(length)) \
+                                +' '+c.END+''.join(each_row[1].ljust(5)) \
+                                +''.join(each_row[2].ljust(length)))
 
-
+    print_pattern('-',60,c.BLUE)
+    print_pattern('-',60,c.BLUE)
 
 
 
