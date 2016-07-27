@@ -106,9 +106,9 @@ def scores(scores,key):
 
     print_pattern('-',total_width,c.BLUE)
     if temp_index != '  ':
-        print('Ctrl+C & ENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n \
-                i.e. '+c.CYAN+'1 lineup \t'+c.END+'for viewing lineups if exists\n \
-                or   '+c.CYAN+'1 details \t'+c.END+'for match details if exists\n \
+        print('Ctrl+C & ENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n\
+                i.e. '+c.CYAN+'1 lineup \t'+c.END+'for viewing lineups if exists\n\
+                or   '+c.CYAN+'1 details \t'+c.END+'for match details if exists\n\
                 or  '+c.CYAN+' 1 statistics \t'+c.END+'for match statistics if exists')
 
     print_pattern('-',total_width,c.BLUE)
@@ -141,16 +141,16 @@ def _lineup(lineups):
 
     lengthlist = lsprocess.get_longest_list(lineups)
     length = max(lengthlist)+2
-
-    print_pattern('+',60,c.BLUE)
+    plen = int(length*3-length/5)
+    print_pattern('+',plen,c.BLUE)
     print(c.TITLE+'\t\t\t'+' LINEUPS '+c.END)
-    print_pattern('+',60,c.BLUE)
+    print_pattern('+',plen,c.BLUE)
 
     flag = 0 #flag for details like lineup, substitution etc
-    print(c.fill[2]+'       '+''.join(('HOME TEAM').ljust(length)) \
-        +c.END+'      '+''.join(('AWAY TEAM').ljust(length))+c.END)
+    print(c.ORANGE+'       '+''.join(('HOME TEAM').ljust(length)) \
+            +'      '+''.join(('AWAY TEAM').ljust(length))+c.END)
 
-    print_pattern('-',60,c.BLUE)
+    print_pattern('-',plen,c.BLUE)
 
     for each_row in lineups:
         if isinstance(each_row, list) == False:
@@ -158,12 +158,20 @@ def _lineup(lineups):
                 flag = 1
 
             elif each_row == 'substitutions :':
+                print_pattern('*',plen,c.BLUE)
+                print(c.ORANGE+'\t\t\tPLAYER SUBSTITUTIONS')
                 flag = 2
 
             elif each_row == 'substitute players :':
+                print_pattern('~',plen,c.BLUE)
+                print(c.ORANGE+'\t\t\tSUBSTITUTE PLAYERS')
+                print_pattern('~',plen,c.BLUE)
                 flag = 3
 
             elif each_row == 'coach :':
+                print_pattern('*',plen,c.BLUE)
+                print(c.ORANGE+'\t\t\tMANAGERS')
+                print_pattern('-',plen,c.BLUE)
                 flag = 4
 
             elif each_row == 'formations :':
@@ -172,14 +180,14 @@ def _lineup(lineups):
 
         else:
 
-
             if flag == 5:
                 print('      '+''.join(str(each_row[0]).ljust(length)) \
                     +'      '+''.join(str(each_row[1]).ljust(length)))
-                print_pattern('-',60,c.BLUE)
+                print_pattern('-',plen,c.BLUE)
 
 
             elif flag == 1:
+
                 if len(each_row) == 2:
                     print(c.CYAN+'      '+''.join(each_row[0].ljust(length)) \
                             +'      '+''.join(each_row[1].ljust(length))+c.END)
@@ -187,33 +195,75 @@ def _lineup(lineups):
                 elif len(each_row) == 3:
                     try:
                         int((each_row[0].split("'"))[0])
-                        print(' '+c.END+''.join(each_row[0].ljust(5)) \
-                                +''.join(each_row[1].ljust(length)) \
-                                +'      '+c.CYAN+''.join(each_row[2].ljust(length))+c.END)
+                        print(' '+c.RED+''.join(each_row[0].ljust(5)) \
+                                +''.join(each_row[1].ljust(length))+'      '+\
+                                c.CYAN+''.join(each_row[2].ljust(length))+c.END)
                     except:
-                        print('      '+c.CYAN+''.join(each_row[0].ljust(length)) \
-                                +' '+c.END+''.join(each_row[1].ljust(5)) \
+                        print('      '+c.CYAN+''.join(each_row[0].ljust(length))\
+                                +' '+c.RED+''.join(each_row[1].ljust(5)) \
                                 +''.join(each_row[2].ljust(length)))
 
+                elif len(each_row) == 4:
+                    print(' '+c.RED+''.join(each_row[0].ljust(5))\
+                            +''.join(each_row[1].ljust(length)) \
+                            +' '+c.RED+''.join(each_row[2].ljust(5)) \
+                            +''.join(each_row[3].ljust(length)))
+
+
             elif flag == 4:
-                print_pattern('-',60,c.BLUE)
-                print('\t\t\tManagers')
-                print_pattern('-',60,c.BLUE)
-                print('      '+c.BLUE+''.join(str(each_row[0]).ljust(length)) \
+                print('      '+c.PURPLE+''.join(str(each_row[0]).ljust(length)) \
                     +'      '+''.join(str(each_row[1]).ljust(length)))
 
             elif flag == 2:
                 try:
-                    print_pattern('-',60,c.BLUE)
-                    print(' '+each_row[0]+c.RED+'(off)'+c.END+each_row[1][0]+'\t'+each_row[2]+c.RED+'(off)'+c.END+each_row[3][0])
-                    print('    '+c.GREEN+'(on)'+c.END+each_row[1][1]+'\t'+each_row[2]+c.GREEN+'(on)'+c.END+each_row[3][1])
+                    print_pattern('-',plen,c.BLUE)
+                    print(' '+c.RED+''.join(each_row[0].ljust(5))\
+                            +''.join(each_row[1][0].ljust(length))\
+                            +' '+''.join(each_row[2].ljust(5))\
+                            +''.join(each_row[3][0].ljust(length))\
+                            +'(off)'+c.END)
 
+                    print('      '+c.GREEN+''.join(each_row[1][1].ljust(length))\
+                            +'      '+''.join(each_row[3][1].ljust(length))\
+                            +'(on)'+c.END)
 
                 except:
-                    print('lineup exception')
+                    print(' '+c.RED+''.join(' '.ljust(5))\
+                            +''.join(' '.ljust(length))\
+                            +' '+''.join(each_row[1].ljust(5))\
+                            +''.join(each_row[2][0].ljust(length))\
+                            +'(off)'+c.END)
 
-    #print_pattern('-',60,c.BLUE)
-    print_pattern('-',60,c.BLUE)
+                    print('      '+c.GREEN+''.join(' '.ljust(length))\
+                            +'      '+''.join(each_row[2][1].ljust(length))\
+                            +'(on)'+c.END)
+
+
+            elif flag == 3:
+
+                if len(each_row) == 2:
+                    print(c.CYAN+'      '+''.join(each_row[0].ljust(length)) \
+                            +'      '+''.join(each_row[1].ljust(length))+c.END)
+
+                elif len(each_row) == 3:
+                    try:
+                        int((each_row[0].split("'"))[0])
+                        print(' '+c.GREEN+''.join(each_row[0].ljust(5)) \
+                                +''.join(each_row[1].ljust(length))+'      '+\
+                                c.CYAN+''.join(each_row[2].ljust(length))+c.END)
+                    except:
+                        print('      '+c.CYAN+''.join(each_row[0].ljust(length))\
+                                +' '+c.GREEN+''.join(each_row[1].ljust(5)) \
+                                +''.join(each_row[2].ljust(length)))
+
+                elif len(each_row) == 4:
+                    print(' '+c.GREEN+''.join(each_row[0].ljust(5))\
+                            +''.join(each_row[1].ljust(length)) \
+                            +' '+c.GREEN+''.join(each_row[2].ljust(5)) \
+                            +''.join(each_row[3].ljust(length)))
+
+    print_pattern('~',plen,c.BLUE)
+    print_pattern('~',plen,c.BLUE)
 
 
 

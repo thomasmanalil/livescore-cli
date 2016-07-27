@@ -44,7 +44,9 @@ def main():
                             flag = 0
 
                         elif index_no in url_dict.iterkeys():
-                            print("Displaying Match Details for {} vs {}".format(url_dict[index_no][1],url_dict[index_no][2]))
+                            print("Displaying Match Details for "+c.ORANGE\
+                                    +"{}".format(url_dict[index_no][1])+c.END\
+                                    +" vs "+c.ORANGE+"{}".format(url_dict[index_no][2]))
                             lsprint.match_facts('http://livescore.com'+url_dict[index_no][0], facts_tail)
                             flag = 1
 
