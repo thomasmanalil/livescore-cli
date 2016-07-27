@@ -107,9 +107,9 @@ def scores(scores,key):
     print_pattern('-',total_width,c.BLUE)
     if temp_index != '  ':
         print('Ctrl+C & ENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n \
-                i.e. '+c.CYAN+'2 lineup \t'+c.END+'for viewing lineups if exists\n \
-                or   '+c.CYAN+'2 details \t'+c.END+'for match details if exists\n \
-                or  '+c.CYAN+' 2 statistics \t'+c.END+'for match statistics if exists')
+                i.e. '+c.CYAN+'1 lineup \t'+c.END+'for viewing lineups if exists\n \
+                or   '+c.CYAN+'1 details \t'+c.END+'for match details if exists\n \
+                or  '+c.CYAN+' 1 statistics \t'+c.END+'for match statistics if exists')
 
     print_pattern('-',total_width,c.BLUE)
     return facts_route
@@ -172,13 +172,14 @@ def _lineup(lineups):
 
         else:
 
+
             if flag == 5:
                 print('      '+''.join(str(each_row[0]).ljust(length)) \
                     +'      '+''.join(str(each_row[1]).ljust(length)))
                 print_pattern('-',60,c.BLUE)
 
 
-            if flag == 1:
+            elif flag == 1:
                 if len(each_row) == 2:
                     print(c.CYAN+'      '+''.join(each_row[0].ljust(length)) \
                             +'      '+''.join(each_row[1].ljust(length))+c.END)
@@ -194,7 +195,24 @@ def _lineup(lineups):
                                 +' '+c.END+''.join(each_row[1].ljust(5)) \
                                 +''.join(each_row[2].ljust(length)))
 
-    print_pattern('-',60,c.BLUE)
+            elif flag == 4:
+                print_pattern('-',60,c.BLUE)
+                print('\t\t\tManagers')
+                print_pattern('-',60,c.BLUE)
+                print('      '+c.BLUE+''.join(str(each_row[0]).ljust(length)) \
+                    +'      '+''.join(str(each_row[1]).ljust(length)))
+
+            elif flag == 2:
+                try:
+                    print_pattern('-',60,c.BLUE)
+                    print(' '+each_row[0]+c.RED+'(off)'+c.END+each_row[1][0]+'\t'+each_row[2]+c.RED+'(off)'+c.END+each_row[3][0])
+                    print('    '+c.GREEN+'(on)'+c.END+each_row[1][1]+'\t'+each_row[2]+c.GREEN+'(on)'+c.END+each_row[3][1])
+
+
+                except:
+                    print('lineup exception')
+
+    #print_pattern('-',60,c.BLUE)
     print_pattern('-',60,c.BLUE)
 
 
