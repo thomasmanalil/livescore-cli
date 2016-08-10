@@ -17,17 +17,22 @@ def main():
     bTable = bool(cli.args.table)
     bScore = bool(cli.args.score)
     bScorers = bool(cli.args.scorers)
+    bNews = bool(cli.args.news)
     url_dict = {}
     facts_tail = []
     bye_message = '\n\nBye, Keep Loving Football and livescore-cli :)\n'
 
-    if not bTable and not bScore and not bScorers and not bNews:
+    if not bTable and not bScore and not bScorers:
         bScore = True
 
     while True:
         try:
             os.system('clear')
             for k in cli.args.League:
+
+                if bNews:
+                    lsnews.print_news(lsnews.get_news())
+                    break
                 # Code to fetch data from URL[k]
                 print(' ... Fetching information from www.livescore.com ... ')
                 if lsweb.is_connected(pingTest) is True:

@@ -16,7 +16,7 @@ def get_news(uri=URL.goalUS,sclass='news_box2'):
         fw = open('data.json', 'w')
         newsstr = json.dumps(news, indent=4)
         fw.write('{"news":')
-        fw.write(newsstr)   
+        fw.write(newsstr)
         fw.write('}')
         fw.close()
         with open('data.json') as f:
@@ -24,7 +24,7 @@ def get_news(uri=URL.goalUS,sclass='news_box2'):
         data.update(a_dict)
         with open('data.json', 'w') as f:
             json.dump(data, f)
-        
+
         return news
 
     except:
@@ -50,6 +50,7 @@ def print_news(news):
             color_count = 0
         color_count = color_count + 1
     lsprint.print_pattern('*',width+6,lscolors.ORANGE)
+    print(" Press Ctrl+C to exit, If you're done :) ")
     lsprint.print_pattern('*',width+6,lscolors.ORANGE)
 
 

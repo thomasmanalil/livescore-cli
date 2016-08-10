@@ -120,7 +120,7 @@ def match_facts(url, flag):
     details, lineup, statistics = lsweb.get_match_facts(url)
 
     if flag.strip() == 'details':
-        print(details)
+        _details(details)
 
     elif flag.strip() == 'lineup':
         _lineup(lineup)
@@ -228,15 +228,23 @@ def _lineup(lineups):
                             +'(on)'+c.END)
 
                 except:
-                    print(' '+c.RED+''.join(' '.ljust(5))\
-                            +''.join(' '.ljust(length))\
-                            +' '+''.join(each_row[1].ljust(5))\
-                            +''.join(each_row[2][0].ljust(length))\
-                            +'(off)'+c.END)
+                    try:
+                        print(' '+c.RED+''.join(' '.ljust(5))\
+                                +''.join(' '.ljust(length))\
+                                +' '+''.join(each_row[1].ljust(5))\
+                                +''.join(each_row[2][0].ljust(length))\
+                                +'(off)'+c.END)
 
-                    print('      '+c.GREEN+''.join(' '.ljust(length))\
-                            +'      '+''.join(each_row[2][1].ljust(length))\
-                            +'(on)'+c.END)
+                        print('      '+c.GREEN+''.join(' '.ljust(length))\
+                                +'      '+''.join(each_row[2][1].ljust(length))\
+                                +'(on)'+c.END)
+                    except:
+                        print(c.RED+' '+''.join(each_row[0].ljust(5))\
+                                +''.join(each_row[1][0].ljust(length))\
+                                +'(off)'+c.END)
+
+                        print(c.GREEN+'      '+''.join(each_row[1][1].ljust(length))\
+                                +'(on)'+c.END)
 
 
             elif flag == 3:
@@ -265,6 +273,37 @@ def _lineup(lineups):
     print_pattern('~',plen,c.BLUE)
     print_pattern('~',plen,c.BLUE)
 
+def _details(details):
+    plen = 70
+    for detail in details:
+        if len(detail) > 2:
+            try:
+                score = (detail[2]).strip().split(' - ')
+                scoreh = int(score[0])
+                scorea = int(score[1])
+                print_pattern('~',plen,c.BLUE)
+                if isinstance(detail[1],list) == False:
+                    print(detail[0]+' '+ detail[1]+'\t'+score[0]+' - '+score[1])
+                else:
+                    print(detail[0]+' '+ detail[1][0]+' '+detail[1][1]\
+                            +'\t'+score[0]+' - '+score[1])
+            except:
+                try:
+                    score = (detail[1]).strip().split(' - ')
+                    scoreh = int(score[0])
+                    scorea = int(score[1])
+                    print_pattern('~',plen,c.BLUE)
+                    if isinstance(detail[1],list) == False:
+                        print(detail[0]+' '+ detail[1]+'\t'+score[0]+' - '+score[1])
+                        print('2')
+                    else:
+                        print(detail[0]+' '+ detail[1][0]+' '+detail[1][1]\
+                                +'\t'+score[0]+' - '+score[1])
+                        print('3')
+
+
+                except:
+                    print('0')
 
 
 def table(tables,key):
