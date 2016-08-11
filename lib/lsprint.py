@@ -116,7 +116,6 @@ def scores(scores,key):
 
 
 def match_facts(url, flag):
-
     details, lineup, statistics = lsweb.get_match_facts(url)
 
     if flag.strip() == 'details':
@@ -138,7 +137,6 @@ def match_facts(url, flag):
 
 
 def _lineup(lineups):
-
     lengthlist = lsprocess.get_longest_list(lineups)
     length = max(lengthlist)+2
     plen = int(length*3-length/5)

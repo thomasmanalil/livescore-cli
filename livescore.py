@@ -34,7 +34,7 @@ def main():
                     lsnews.print_news(lsnews.get_news())
                     break
                 # Code to fetch data from URL[k]
-                print(' ... Fetching information from www.livescore.com ... ')
+                print(' ... Fetching information from www.livescores.com ... ')
                 if lsweb.is_connected(pingTest) is True:
                     content = lsweb.get_content_ts(lsweb.get_soup(URL.URL[k][1]))
 
@@ -52,7 +52,7 @@ def main():
                             print("Displaying Match Details for "+c.ORANGE\
                                     +"{}".format(url_dict[index_no][1])+c.END\
                                     +" vs "+c.ORANGE+"{}".format(url_dict[index_no][2]))
-                            lsprint.match_facts('http://livescore.com'+url_dict[index_no][0], facts_tail)
+                            lsprint.match_facts('http://www.livescores.com'+url_dict[index_no][0], facts_tail)
                             flag = 1
 
                         else:
