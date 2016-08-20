@@ -294,7 +294,6 @@ def _lineup(lineups):
 def _details(details):
     plen = 70
     print(details)
-    for detail in details:
 
 
 def table(tables,key):
