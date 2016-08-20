@@ -83,7 +83,7 @@ def main():
             try:
                 if url_dict and flag == 0:
 
-                    facts_input = raw_input(c.CYAN+" Enter index number of the match: "+c.END)
+                    facts_input = raw_input(c.CYAN+" Enter index number and details type of the match: "+c.END)
                     _temp = facts_input.split(' ')
                     index_no = int(_temp[0])
                     facts_tail = _temp[1]
