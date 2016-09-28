@@ -25,6 +25,26 @@ def parseTree(subtree):
         subtree = subtree[0]
     return subtree
 
+
+# Use only to parse the match details
+def parseTreeDetails(subtree):
+    subtree = [t for t in subtree if t != ' ']
+    i = 0
+    while i < len(subtree):
+        name = getattr(subtree[i], "name", None)
+        if name is not None:
+            if subtree[i].has_attr('class'):
+                if subtree[i]['class'][0] == 'inc':
+                    subtree[i].append(subtree[i]['class'][1])
+            subtree[i] = parseTreeDetails(subtree[i])
+        i += 1
+    subtree = [t
+               for t in subtree
+               if t != ' ' and t != '' and t is not None and t != []]
+    if len(subtree) == 1:
+        subtree = subtree[0]
+    return subtree
+
 def create_directory(path):
     try:
         os.makedirs(path)
@@ -96,7 +116,9 @@ def get_match_facts(url):
     details = soup.findAll('div', {'data-id': 'details'})  # Match Details
     lineup = soup.findAll('div', {'data-id': 'substitutions'})  # Lineups, Formations and substitutions
     statistics = soup.findAll('div', {'data-id': 'stats'})  # Statistics
-    [details, lineup, statistics] = map(parseTree, [details, lineup, statistics])
+    [lineup, statistics] = map(parseTree, [lineup, statistics])
+    # Details need to be parsed a little bit differently
+    details = parseTreeDetails(details)
 
     return details, lineup, statistics
 
