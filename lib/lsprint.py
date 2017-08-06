@@ -291,9 +291,40 @@ def _lineup(lineups):
     print_pattern('~',plen,c.BLUE)
     print_pattern('~',plen,c.BLUE)
 
+
 def _details(details):
-    plen = 70
-    print(details)
+    for each_details in details[1:-4]:
+        print each_details
+    print("\n\n")
+    for each_details in details[1:-4]:
+        line_text = ""
+        for each_row in each_details:
+            if isinstance(each_row, list):
+                #print repr(each_row)
+                if 'goal' in each_row:
+                    for in_list in each_row:
+                        line_text += in_list
+                
+                elif 'yellowcard' in each_row:
+                    for in_list in each_row:
+                        line_text += in_list
+                
+                elif 'redcard' in each_row:
+                    for in_list in each_row:
+                        line_text += in_list
+                
+                elif 'redyellowcard' in each_row:
+                    for in_list in each_row:
+                        line_text += in_list
+                
+            else:
+                for in_list in each_row:
+                    if 'goal' in each_row:
+                        for in_list in each_row:
+                            line_text += in_list
+                
+                line_text += each_row
+        print line_text
 
 
 def table(tables,key):
@@ -358,14 +389,33 @@ def table(tables,key):
     print_pattern('+',75+longest_length,c.BLUE)
 
 
-
-
-
-
-
-
 def print_pattern(c2p,n,color): #characterToprint #no of character to print
     for i in range(n):
         print(color+c2p),
         sys.stdout.softspace=0
     print(c.END)
+
+if __name__ == '__main__':
+    details = [[u'match details :', u'show assists'],
+ [u" 4' ", [[u'Florin Andone', u'goal'], u' Guilherme (assist) '], u' 1 - 0 '],
+ [u" 25' ", [u'Fernando Navarro', u'yellowcard'], u' \xa0 '],
+ [u" 28' ",
+  [[u'Florin Andone', u'goal'], u' Emre Colak (assist) '],
+  u' 2 - 0 '],
+ [u" 38' ", u' \xa0 ', [u'yellowcard', u'Roque Mesa']],
+ [u" 39' ", [u'Carles Gil', u'goal'], u' 3 - 0 '],
+ [u" 44' ", [u'Carles Gil', u'yellowcard'], u' \xa0 '],
+ [u" 48' ", [u'Pedro Mosquera', u'yellowcard'], u' \xa0 '],
+ [u" 51' ", u' \xa0 ', [u'yellowcard', u'Hernan Santana']],
+ [u" 54' ",
+  [u'Emre Colak', u'yellowcard'],
+  u' \xa0 ',
+  [u'yellowcard', u'Momo']],
+ [u" 79' ", u' \xa0 ', [u'redyellowcard', u'Hernan Santana']],
+ [u'venue :', u'spectators :'],
+ [u'Estadio Municipal de Riazor', u'21764'],
+ u'referee :',
+ u'Mario Melero (Spain)']
+    _details(details)
+
+

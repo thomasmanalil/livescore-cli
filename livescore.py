@@ -85,8 +85,15 @@ def main():
 
                     facts_input = raw_input(c.CYAN+" Enter index number and details type of the match: "+c.END)
                     _temp = facts_input.split(' ')
-                    index_no = int(_temp[0])
-                    facts_tail = _temp[1]
+                    try:
+                        index_no = int(_temp[0])
+                    except:
+                        print("Invalid input. exiting ...")
+                        exit()
+                    try:
+                        facts_tail = _temp[1]
+                    except:
+                        facts_tail = "details"
 
                 elif url_dict and flag == 1:
                     index_no = 0

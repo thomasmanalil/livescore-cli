@@ -2,56 +2,57 @@
 # -*- coding: utf-8 -*-
 
 import re
-import lsweb, lsprocess, lsprint, lscolors, URL, tt
+import lsweb
+import lsprocess
+import lsprint
+import lscolors
+import URL
+import tt
 import json
 
-def get_news(uri=URL.goalUS,sclass='news_box2'):
+
+def read_json(file_path):
+    with open(file_path) as f:
+        json_read = json.load(f)
+    return json_read
+
+
+def write_json(file_path, dict_file, dict_indent=4):
+    with open(file_path, "w") as f:
+        f.write(json.dumps(dict_file))
+
+
+def get_news(url=URL.goalUS, sclass='news_box2'):
+    news_dict = {}
     try:
-        rows = lsweb.get_livescore(uri,sclass)
-        print('fetching soccer news from goal.com\n')
-        print('(Last Updated at '+lscolors.ORANGE+tt.datetime_now()+lscolors.END+')')
-        a_dict = {'datetime': tt.datetime_now()}
+        rows = lsweb.get_livescore(url, sclass)
         contents = '\n'.join(map(lambda r: r.text, rows))
-        news = re.split('\n',contents)
-        fw = open('data.json', 'w')
-        newsstr = json.dumps(news, indent=4)
-        fw.write('{"news":')
-        fw.write(newsstr)
-        fw.write('}')
-        fw.close()
-        with open('data.json') as f:
-            data = json.load(f)
-        data.update(a_dict)
-        with open('data.json', 'w') as f:
-            json.dump(data, f)
+        news = contents.split("\n")
+        news_dict = {"news": news, "last_updated_time": tt.datetime_now()}
+        write_json("data.json", news_dict)
 
-        return news
+    except Exception as e:
+        if "connection" in str(e).lower():
+            news_dict = read_json("data.json")
 
-    except:
-        fr = open('data.json').read()
-        read = json.loads(fr)
-        datetime = read['datetime']
-        print("(Last Updated at "+lscolors.ORANGE+datetime+lscolors.END+')')
-        return read['news']
+    return news_dict
 
 
+def print_news(news_dict):
+    last_updated_time = news_dict.get("last_updated_time")
+    news_array = news_dict.get("news")
+    print('fetching soccer news from goal.com...\n')
+    print('(Last Updated at ' + lscolors.ORANGE + last_updated_time + lscolors.END + ')')
 
-def print_news(news):
-    width = lsprocess.find_longest_no(news)
-    news_count = 1
-    color_count = 1
-    lsprint.print_pattern('*',width+6,lscolors.ORANGE)
-    for news_no in news:
-        pcount = str(news_count)+'.'
-        print(lscolors.colorArray[color_count]+''.join(pcount.ljust(5))+news_no)
-        #lsprint.sendAlert(news_no)
-        news_count = news_count + 1
-        if color_count == 1:
-            color_count = 0
-        color_count = color_count + 1
-    lsprint.print_pattern('*',width+6,lscolors.ORANGE)
-    print(" Press Ctrl+C to exit, If you're done :) ")
-    lsprint.print_pattern('*',width+6,lscolors.ORANGE)
+    width = lsprocess.find_longest_no(news_array)
+    lsprint.print_pattern('*', width+6, lscolors.ORANGE)
+
+    for sn, each_news in enumerate(news_array):
+        print(lscolors.colorArray[sn%2+2] + ''.join(each_news.ljust(5)))
+
+    lsprint.print_pattern('*', width+6, lscolors.ORANGE)
+    #print(" Press Ctrl+C to exit, If you're done :) ")
+    lsprint.print_pattern('*', width+6, lscolors.ORANGE)
 
 
 if __name__ == '__main__':
