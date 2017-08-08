@@ -295,36 +295,6 @@ def _lineup(lineups):
 def _details(details):
     for each_details in details[1:-4]:
         print each_details
-    print("\n\n")
-    for each_details in details[1:-4]:
-        line_text = ""
-        for each_row in each_details:
-            if isinstance(each_row, list):
-                #print repr(each_row)
-                if 'goal' in each_row:
-                    for in_list in each_row:
-                        line_text += in_list
-                
-                elif 'yellowcard' in each_row:
-                    for in_list in each_row:
-                        line_text += in_list
-                
-                elif 'redcard' in each_row:
-                    for in_list in each_row:
-                        line_text += in_list
-                
-                elif 'redyellowcard' in each_row:
-                    for in_list in each_row:
-                        line_text += in_list
-                
-            else:
-                for in_list in each_row:
-                    if 'goal' in each_row:
-                        for in_list in each_row:
-                            line_text += in_list
-                
-                line_text += each_row
-        print line_text
 
 
 def table(tables,key):
@@ -395,6 +365,7 @@ def print_pattern(c2p,n,color): #characterToprint #no of character to print
         sys.stdout.softspace=0
     print(c.END)
 
+
 if __name__ == '__main__':
     details = [[u'match details :', u'show assists'],
  [u" 4' ", [[u'Florin Andone', u'goal'], u' Guilherme (assist) '], u' 1 - 0 '],
@@ -417,5 +388,4 @@ if __name__ == '__main__':
  u'referee :',
  u'Mario Melero (Spain)']
     _details(details)
-
 
