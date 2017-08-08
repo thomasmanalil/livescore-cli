@@ -70,13 +70,13 @@ def main():
                     print(c.TITLE+"Check Your Internet Connection,"
                           " It looks like you're out of internet."+c.END)
 
-                time.sleep(3)
+                # time.sleep(3)
 
             bTable = False
             bScorers = False
             if not bool(bScore):
                 break
-            time.sleep(7)
+            time.sleep(10)
 
         except KeyboardInterrupt:
 
@@ -89,15 +89,22 @@ def main():
                         index_no = int(_temp[0])
                     except:
                         print("Invalid input. exiting ...")
-                        exit()
+                        break
                     try:
                         facts_tail = _temp[1]
                     except:
                         facts_tail = "details"
 
                 elif url_dict and flag == 1:
-                    index_no = 0
-
+                    try:
+                        msg = raw_input("Pausing Update... \nEnter c to continue update with this details \nEnter m to continue update with score MainMenu... ")
+                        if msg == "c" or msg == "C":
+                            continue
+                        elif msg == "m" or msg == "M":
+                            index_no = 0
+                    except:
+                        print(c.GREEN+bye_message+c.END)
+                        break
                 else:
                     print(c.GREEN+bye_message+c.END)
                     flag = 0
