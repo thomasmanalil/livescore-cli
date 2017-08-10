@@ -293,8 +293,9 @@ def _lineup(lineups):
 
 
 def _details(details):
-    for each_details in details[1:-4]:
-        print each_details
+    import lsreader
+    print(details)
+    print(lsreader.details_reader(details))
 
 
 def table(tables,key):
@@ -367,6 +368,7 @@ def print_pattern(c2p,n,color): #characterToprint #no of character to print
 
 
 if __name__ == '__main__':
+    import lsreader
     details = [[u'match details :', u'show assists'],
  [u" 4' ", [[u'Florin Andone', u'goal'], u' Guilherme (assist) '], u' 1 - 0 '],
  [u" 25' ", [u'Fernando Navarro', u'yellowcard'], u' \xa0 '],
@@ -387,5 +389,7 @@ if __name__ == '__main__':
  [u'Estadio Municipal de Riazor', u'21764'],
  u'referee :',
  u'Mario Melero (Spain)']
-    _details(details)
+    print lsreader.details_reader(details)
+
+    #_details(details)
 
