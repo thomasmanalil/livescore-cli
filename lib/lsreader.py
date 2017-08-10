@@ -15,6 +15,9 @@ def details_reader(details):
 
     def get_goal(goal_detail):
         details_dict = {}
+        if u' (pen.) ' in goal_detail[0]:
+            goal_detail[0][0] = goal_detail[0][0] + goal_detail[0][2]
+            print(goal_detail[0][0])
         details_dict['goal'] = goal_detail[0][0]
         details_dict['assist'] = goal_detail[1].strip(' (assist) ')
         return details_dict
@@ -23,6 +26,10 @@ def details_reader(details):
         details_dict = {}
         if isinstance(home_details[0], list):
             details_dict.update(get_goal(home_details))
+        elif u' (pen.) ' in home_details:
+            home_details.remove(u' (pen.) ')
+            home_details.remove(u'goal')
+            details_dict['goal'] = home_details[0] + ' (pen.)'
         else:
             details_dict[home_details[1]] = home_details[0]
         return details_dict
@@ -30,7 +37,12 @@ def details_reader(details):
     def get_away_details(away_details):
         details_dict = {}
         if isinstance(away_details[0], list):
+            away_details[0][0], away_details[0][1] = away_details[0][1], away_details[0][0]
             details_dict.update(get_goal(away_details))
+        elif u' (pen.) ' in away_details:
+            away_details.remove(u' (pen.) ')
+            away_details.remove(u'goal')
+            details_dict['goal'] = away_details[0] + ' (pen.)'
         else:
             details_dict[away_details[0]] = away_details[1]
         return details_dict
