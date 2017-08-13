@@ -294,8 +294,9 @@ def _lineup(lineups):
 
 def _details(details):
     import lsreader
-    print(details)
+    print("Before lsreader\n{}".format(details))
     details = lsreader.details_reader(details)
+    print("After lsreader\n{}".format(details))
     lengths = lsreader.length_finder(details)
     home_length = max([lengths.get('home_stat'), lengths.get('home_goal')]) + 5
     away_length = max([lengths.get('away_stat'), lengths.get('away_goal')]) + 5
