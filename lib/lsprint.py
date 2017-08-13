@@ -294,16 +294,22 @@ def _lineup(lineups):
 
 def _details(details):
     import lsreader
-    #print(details)
+    print(details)
     details = lsreader.details_reader(details)
+    lengths = lsreader.length_finder(details)
+    home_length = max([lengths.get('home_stat'), lengths.get('home_goal')]) + 5
+    away_length = max([lengths.get('away_stat'), lengths.get('away_goal')]) + 5
+    time_length = 6
+    score_length = 9
     if details:
-        plen = 70
-        length = 30
+        plen = time_length + home_length + score_length +away_length
         print_pattern('+', plen, c.BLUE)
         print(c.TITLE+'\t\t\t'+' MATCH DETAILS '+c.END)
         print_pattern('+',plen,c.BLUE)
-        print(c.ORANGE+'       '+''.join(('HOME TEAM').ljust(length)) \
-                +'      '+''.join(('AWAY TEAM').ljust(length))+c.END)
+        print(c.ORANGE+''.join(''.ljust(time_length+5))\
+                + ''.join(('HOME TEAM').ljust(home_length)) \
+                + ''.join(' '.ljust(score_length))\
+                + ''.join(('AWAY TEAM').ljust(away_length))+c.END)
         print_pattern('-', plen, c.BLUE)
         for dtl in details:
             home_line = ''
@@ -314,20 +320,38 @@ def _details(details):
             time = dtl.get('time')
             if hdk in dtl.keys():
                 if 'goal' in dtl.get(hdk).keys():
-                    pass
+                    score_line = dtl.get('score')
+                    home_line = dtl.get(hdk).get('goal')
+                    if 'assist' in dtl.get(hdk).keys():
+                        home_line += ' ({})'.format(dtl.get(hdk).get('assist'))
+
+
                 else:
-                    home_line = dtl.get(hdk)[(dtl.get(hdk).keys()[0])] + " (" + dtl.get(hdk).keys()[0]+")"
+                    score_line = score_length * ' '
+                    home_line = dtl.get(hdk)[(dtl.get(hdk).keys()[0])] \
+                            + " (" + dtl.get(hdk).keys()[0]+")"
 
             if adk in dtl.keys():
                 if 'goal' in dtl.get(adk).keys():
-                    pass
+                    score_line = dtl.get('score')
+                    away_line = dtl.get(adk).get('goal')
+                    if 'assist' in dtl.get(adk).keys():
+                        away_line += ' ({})'.format(dtl.get(adk).get('assist'))
                 else:
-                    away_line = dtl.get(adk)[(dtl.get(adk).keys()[0])] + " (" + dtl.get(adk).keys()[0]+")"
-            print_line = "{} {} {}".format(time, home_line, away_line)
+                    score_line = score_length * ' '
+                    away_line = dtl.get(adk)[(dtl.get(adk).keys()[0])] \
+                            + " (" + dtl.get(adk).keys()[0]+")"
+            #print_line = "{} {} {}".format(time, home_line, away_line)
+            print_line = ''.join(time.ljust(time_length)) \
+                    + ''.join(home_line.ljust(home_length))\
+                    + ''.join(score_line.ljust(score_length))\
+                    + ''.join(away_line.ljust(away_length))
             print(print_line)
-
     else:
         print("No Details Available for the Match")
+
+    print_pattern('-', plen, c.BLUE)
+    print_pattern('-', plen, c.BLUE)
 
 
 def table(tables,key):
