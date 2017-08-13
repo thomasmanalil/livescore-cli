@@ -106,7 +106,7 @@ def scores(scores,key):
 
     print_pattern('-',total_width,c.BLUE)
     if temp_index != '  ':
-        print('Ctrl+C & ENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n\
+        print('Press Ctrl+C &\nENTER RESPECTIVE NUMBER & DETAILTYPE FOR MATCH DETAILS\n\
         i.e. '+c.CYAN+'1 lineup \t'+c.END+'for viewing lineups if exists\n\
         or   '+c.CYAN+'1 details \t'+c.END+'for match details if exists\n\
         or  '+c.CYAN+' 1 stat \t'+c.END+'for match statistics if exists')
@@ -294,8 +294,40 @@ def _lineup(lineups):
 
 def _details(details):
     import lsreader
-    print(details)
-    print(lsreader.details_reader(details))
+    #print(details)
+    details = lsreader.details_reader(details)
+    if details:
+        plen = 70
+        length = 30
+        print_pattern('+', plen, c.BLUE)
+        print(c.TITLE+'\t\t\t'+' MATCH DETAILS '+c.END)
+        print_pattern('+',plen,c.BLUE)
+        print(c.ORANGE+'       '+''.join(('HOME TEAM').ljust(length)) \
+                +'      '+''.join(('AWAY TEAM').ljust(length))+c.END)
+        print_pattern('-', plen, c.BLUE)
+        for dtl in details:
+            home_line = ''
+            away_line = ''
+            print_line = ''
+            hdk = 'home_detail'
+            adk = 'away_detail'
+            time = dtl.get('time')
+            if hdk in dtl.keys():
+                if 'goal' in dtl.get(hdk).keys():
+                    pass
+                else:
+                    home_line = dtl.get(hdk)[(dtl.get(hdk).keys()[0])] + " (" + dtl.get(hdk).keys()[0]+")"
+
+            if adk in dtl.keys():
+                if 'goal' in dtl.get(adk).keys():
+                    pass
+                else:
+                    away_line = dtl.get(adk)[(dtl.get(adk).keys()[0])] + " (" + dtl.get(adk).keys()[0]+")"
+            print_line = "{} {} {}".format(time, home_line, away_line)
+            print(print_line)
+
+    else:
+        print("No Details Available for the Match")
 
 
 def table(tables,key):
@@ -389,7 +421,7 @@ if __name__ == '__main__':
  [u'Estadio Municipal de Riazor', u'21764'],
  u'referee :',
  u'Mario Melero (Spain)']
-    print lsreader.details_reader(details)
+    #print lsreader.details_reader(details)
 
-    #_details(details)
+    _details(details)
 

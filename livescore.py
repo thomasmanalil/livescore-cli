@@ -97,7 +97,8 @@ def main():
 
                 elif url_dict and flag == 1:
                     try:
-                        msg = raw_input("Pausing Update... \nEnter c to continue update with this details \nEnter m to continue update with score MainMenu... ")
+                        message = "Pausing Update... \nEnter c to continue update with this details \nEnter m to continue update with score MainMenu... "
+                        msg = raw_input(c.BLUE+message+c.END)
                         if msg == "c" or msg == "C":
                             continue
                         elif msg == "m" or msg == "M":
