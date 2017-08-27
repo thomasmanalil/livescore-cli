@@ -297,13 +297,14 @@ def _details(details):
     print("Before lsreader\n{}".format(details))
     details = lsreader.details_reader(details)
     print("After lsreader\n{}".format(details))
+    exit()
     lengths = lsreader.length_finder(details)
     home_length = max([lengths.get('home_stat'), lengths.get('home_goal')]) + 5
     away_length = max([lengths.get('away_stat'), lengths.get('away_goal')]) + 5
     time_length = 6
     score_length = 9
+    plen = time_length + home_length + score_length + away_length
     if details:
-        plen = time_length + home_length + score_length +away_length
         print_pattern('+', plen, c.BLUE)
         print(c.TITLE+'\t\t\t'+' MATCH DETAILS '+c.END)
         print_pattern('+',plen,c.BLUE)
@@ -426,27 +427,7 @@ def print_pattern(c2p,n,color): #characterToprint #no of character to print
 
 if __name__ == '__main__':
     import lsreader
-    details = [[u'match details :', u'show assists'],
- [u" 4' ", [[u'Florin Andone', u'goal'], u' Guilherme (assist) '], u' 1 - 0 '],
- [u" 25' ", [u'Fernando Navarro', u'yellowcard'], u' \xa0 '],
- [u" 28' ",
-  [[u'Florin Andone', u'goal'], u' Emre Colak (assist) '],
-  u' 2 - 0 '],
- [u" 38' ", u' \xa0 ', [u'yellowcard', u'Roque Mesa']],
- [u" 39' ", [u'Carles Gil', u'goal'], u' 3 - 0 '],
- [u" 44' ", [u'Carles Gil', u'yellowcard'], u' \xa0 '],
- [u" 48' ", [u'Pedro Mosquera', u'yellowcard'], u' \xa0 '],
- [u" 51' ", u' \xa0 ', [u'yellowcard', u'Hernan Santana']],
- [u" 54' ",
-  [u'Emre Colak', u'yellowcard'],
-  u' \xa0 ',
-  [u'yellowcard', u'Momo']],
- [u" 79' ", u' \xa0 ', [u'redyellowcard', u'Hernan Santana']],
- [u'venue :', u'spectators :'],
- [u'Estadio Municipal de Riazor', u'21764'],
- u'referee :',
- u'Mario Melero (Spain)']
-    #print lsreader.details_reader(details)
+    details = [[u'match details :', u'show assists'], [u" 9' ", u' \xa0 ', [u'yellowcard', u'Idrissa Gana Gueye']], [u" 27' ", [[u'Cesc Fabregas', u'goal'], u' Alvaro Morata (assist) '], u' 1 - 0 '], u'referee :', u'Jon Moss (England)'] 
 
     _details(details)
 

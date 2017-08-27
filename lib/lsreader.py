@@ -108,9 +108,14 @@ details2 = [[u'match details :', u'show assists'], [u" 6' ", u' 0 - 1 ', [[u'goa
 details3 = [[u'match details :', u'show assists'], [u" 14' ", [[u'Nolan Roux', u'goal'], u' Renaud Cohade (assist) '], u' 1 - 0 '], [u" 39' ", [u'Milan Bisevac', u'yellowcard'], u' \xa0 '], [u" 39' ", u' 1 - 1 ', [u'goal', u' (pen.) ', u'Jimmy Briand']], [u" 41' ", u' \xa0 ', [u'yellowcard', u'Lebogang Phiri']], [u" 45' ", u' \xa0 ', [u'yellowcard', u'Yannis Salibur']], [u" 71' ", u' 1 - 2 ', [[u'goal', u'Ludovic Blas'], u' (assist) Pedro Rebocho ']], [u" 85' ", u' 1 - 3 ', [[u'goal', u'Mustapha Diallo'], u' (assist) Ludovic Blas ']], [u'venue :', u'spectators :'], [u'Stade Saint Symphorien', u'14595'], u'referee :', u'Jerome Miguelgorry (France)']
 details4 = [[u'match details :', u'show assists'], [u" 2' ", [[u'Alexandre Lacazette', u'goal'], u' Mohamed Elneny (assist) '], u' 1 - 0 '], [u" 5' ", u' 1 - 1 ', [[u'goal', u'Shinji Okazaki'], u' (assist) Harry Maguire ']], [u" 29' ", u' 1 - 2 ', [[u'goal', u'Jamie Vardy'], u' (assist) Marc Albrighton ']], [u" 45' ", [[u'Danny Welbeck', u'goal'], u' Sead Kolasinac (assist) '], u' 2 - 2 '], [u" 56' ", u' 2 - 3 ', [[u'goal', u'Jamie Vardy'], u' (assist) Riyad Mahrez ']], [u" 83' ", [[u'Aaron Ramsey', u'goal'], u' Granit Xhaka (assist) '], u' 3 - 3 '], [u" 85' ", [[u'Olivier Giroud', u'goal'], u' Granit Xhaka (assist) '], u' 4 - 3 '], [u" 90' ", u' \xa0 ', [u'yellowcard', u'Wes Morgan']], [u'venue :', u'spectators :'], [u'Emirates Stadium', u'59387'], u'referee :', u'Mike Dean (England)']
 details5 = [[u'match details :', u'show assists'], [u" 29' ", u' \xa0 ', [u'yellowcard', u'Gabriel Jesus']], [u" 70' ", u' 0 - 1 ', [[u'goal', u'Sergio Aguero'], u' (assist) David Silva ']], [u" 75' ", u' 0 - 2 ', [u'goal', u' (o.g.) ', u'Lewis Dunk']], [u" 82' ", u' \xa0 ', [u'yellowcard', u'Raheem Sterling']], [u'venue :', u'spectators :'], [u'The American Express Community Stadium', u'30415'], u'referee :', u'Michael Oliver (England)']
+details6 = [[u'match details :', u'show assists'], [u" 9' ", u' \xa0 ', [u'yellowcard', u'Idrissa Gana Gueye']], [u" 27' ", [[u'Cesc Fabregas', u'goal'], u' Alvaro Morata (assist) '], u' 1 - 0 '], u'referee :', u'Jon Moss (England)']
+
 if __name__=='__main__':
     #print(length_finder(details_reader(details1)))
     #print(length_finder(details_reader(details2)))
     #print(length_finder(details_reader(details3)))
-    print(details_reader(details4))
-    print(details_reader(details5))
+    #print(details_reader(details4))
+
+    #print(details_reader(details5))
+    print(details6)
+    print(details_reader(details6))
