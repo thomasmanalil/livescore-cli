@@ -10,6 +10,8 @@ from lib import lsprint
 from lib import lsweb
 
 
+
+
 def main():
     b_table = bool(cli.args.table)
     b_score = bool(cli.args.score)
